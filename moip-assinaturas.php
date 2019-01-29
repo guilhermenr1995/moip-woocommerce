@@ -234,7 +234,7 @@ class MoipAssinaturas {
                 {
                     //Cria assinatura
                     $prd_meta         = get_post_meta($product_id);
-                    $subscription_id  = 'EF'.hash('crc32', $product_id.$order_id); // Para se tornar único
+                    $subscription_id  = hash('crc32', $product_id.$order_id); // Para se tornar único
                     $amount           = str_replace('.', '', $prd_meta['_regular_price'][0]);
                     
                     $subscription = array(
@@ -276,7 +276,7 @@ class MoipAssinaturas {
 
     function make_request ($url, $params = array(), $type = '') {
 
-        $ch = curl_init("https://sandbox.moip.com.br/assinaturas/v1/".$url); //Endereço 
+        $ch = curl_init("https://sandbox.moip.com.br/assinaturas/v1/".$url); //Endereço que redireciona para o ambiente de testes
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($ch, CURLOPT_HEADER, FALSE);
@@ -284,7 +284,7 @@ class MoipAssinaturas {
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE); // Verifica o SSL do host
         curl_setopt($ch, CURLOPT_HTTPHEADER, array(
           "Content-Type: application/json",
-          "Authorization: Basic " . base64_encode('HC0S66EHCNFWZLYTYHN1IK3G2ESTUNWP'.':'.'UJUDNELFM0KSXOTEESX0M5WNAX4OAYYZQ5XVVHXE') // Token de Autenticação (é encontrado no perfil do usuário Moip)
+          "Authorization: Basic " . base64_encode('HC0S66EHCNFWZLYTYHN1IK3G2ESTUNWP'.':'.'UJUDNELFM0KSXOTEESX0M5WNAX4OAYYZQ5XVVHXE') // TODO: Trazer o token inserido no painel de configuração do WooCommerce (Este é só um token de exemplo)
         ));
 
         if (!empty($params)) {
